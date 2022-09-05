@@ -49,38 +49,25 @@ cartRouter.delete(
   }
 );
 
-/* get cart */
-productRouter.get("/findproduct/:id", async (req, res) => {
+/* get user cart */
+cartRouter.get("/findcart/:userId", verifyTokenAndAuthorization, async (req, res) => {
   try {
-    const product = await Product.findById(req.params.id);
-    res.status(200).json(product);
+    const cart = await Cart.findOne({userId: req.params.userId});
+    res.status(200).json(cart);
   } catch (err) {
     res.status(500).json(err);
   }
 });
 
-/* get all products */
-// productRouter.get("/findallproducts", async (req, res) => {
-//   const qNew = req.query.new;
-//   const qCategory = req.query.category;
-//   try {
+/* get all carts */
 
-//     let products;
-//     if (qNew) {
-//         products = await Product.find().sort({createdAt: -1}).limit(2);
-//     } else if (qCategory) {
-//         products = await Product.find({
-//             categories: {
-//                 $in: [qCategory],
-//             }
-//         })
-//     } else {
-//         products = await Product.find();
-//     }
-//     res.status(200).json(products);
-//   } catch (err) {
-//     res.status(500).json(err);
-//   }
-// });
+cartRouter.get("/", verifyTokenAndAdmin, async (req, res) => {
+    try {
+        const carts = await Cart.find();
+        res.status(200).json(carts);
+    } catch (err) {
+        res.status(500).json(err);
+    }
+})
 
 module.exports = cartRouter;
