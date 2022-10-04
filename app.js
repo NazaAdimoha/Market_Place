@@ -11,14 +11,14 @@ const cors = require('cors');
 dotenv.config();
 
 const app = express();
-app.use("/", (req, res, next) => {
-    res.send("Hello World");
-})
 
 connectDB();
 
 app.use(cors());
 app.use(express.json());
+// app.use("/", (req, res, next) => {
+//     res.send("Hello World");
+// })
 app.use('/api/user', userRouter);
 app.use('/api/auth', authRouter);
 app.use('/api/product', productRouter);
