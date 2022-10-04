@@ -11,6 +11,9 @@ const cors = require('cors');
 dotenv.config();
 
 const app = express();
+app.use("/", (req, res, next) => {
+    res.send("Hello World");
+})
 
 connectDB();
 
